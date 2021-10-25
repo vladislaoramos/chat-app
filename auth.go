@@ -6,6 +6,7 @@ type authHandler struct {
 	next http.Handler
 }
 
+
 func (h *authHandler) ServeHTTP(w http.ResponseWriter, r  *http.Request) {
 	_, err := r.Cookie("auth")
 	if err == http.ErrNoCookie {
