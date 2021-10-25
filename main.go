@@ -3,6 +3,9 @@ package main
 import (
 	"chat/trace"
 	"flag"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/providers/google"
+	"github.com/stretchr/signature"
 	"log"
 	"net/http"
 	"os"
@@ -31,6 +34,15 @@ var host = flag.String("host", ":8080", "The host of the application.")
 
 func main() {
 	flag.Parse() // parse the flags
+
+	// setup gomniauth
+	gomniauth.SetSecurityKey(signature.RandomKey(64))
+	gomniauth.WithProviders(
+		google.New("1018380774435-haeqphqvkcgnurqlnl2je751e6n2qenv.apps.googleusercontent.com",
+			"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",
+			"http://localhost:8080/auth/callback/google"),
+	)
+
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
