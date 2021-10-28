@@ -33,7 +33,7 @@ func newRoom(avatar Avatar) *room {
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
 		tracer:  trace.Off(),
-		avatar: avatar,
+		avatar:  avatar,
 	}
 }
 
@@ -65,7 +65,7 @@ const (
 	messageBufferSize = 256
 )
 
-var upgrader = &websocket.Upgrader{ReadBufferSize:  socketBufferSize,
+var upgrader = &websocket.Upgrader{ReadBufferSize: socketBufferSize,
 	WriteBufferSize: socketBufferSize}
 
 func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
@@ -82,9 +82,9 @@ func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	client := &client{
-		socket: socket,
-		send:   make(chan *message, messageBufferSize),
-		room:   r,
+		socket:   socket,
+		send:     make(chan *message, messageBufferSize),
+		room:     r,
 		userData: objx.MustFromBase64(authCookie.Value),
 	}
 

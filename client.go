@@ -30,7 +30,8 @@ func (c *client) read() {
 		msg.AvatarURL, _ = c.room.avatar.GetAvatarURL(c)
 
 		c.room.forward <- msg
-	} }
+	}
+}
 
 func (c *client) write() {
 	defer c.socket.Close()
